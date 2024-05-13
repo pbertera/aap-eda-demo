@@ -1,0 +1,23 @@
+---
+- name: EDA | Webhook | Listen for events on a webhook
+  hosts: localhost
+
+  ## Define our source for events
+
+  sources:
+  - ansible.eda.webhook:
+    host: 0.0.0.0
+    port: 5000
+  rules:
+  - name: EDA | Webhook | Run playbook to greet our webhook callers
+    condition: event.payload.name == 'greeting'
+    actions:
+    - run_job_template:
+      name: "[EDA] Webhook playbook"
+      organization: Default
+      job_args:
+        extra_vars:
+          greeting: "{{ event.payload.message }}"
+    - set_fact:
+      fact:
+        webhookgreeting: "{{ event.payload.message }}"
