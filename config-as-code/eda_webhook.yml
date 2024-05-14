@@ -1,20 +1,14 @@
-- name: EDA | Config As Code | Configure the EDA Webhook Demo
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  tasks:
-  - name: Create the Webhook Rulebook activation
-    infra.eda_configuration.rulebook_activation:
-      name: Webhook
-      description: Webhook activation
-      project: EDA Demo
-      rulebook: eda-rulebook-webhook.yml
-      decision_environment: rhel9_de
-      awx_token: "{{ eda_controller_app_token }}"
-      enabled: true
-      state: present
-      eda_host: "{{ eda_controller_url }}"
-      eda_username: "{{ eda_controller_user }}"
-      eda_password: "{{ eda_controller_password }}"
-      validate_certs: "{{ eda_validate_certs }}"
-
+- name: Create the Webhook Rulebook activation
+  infra.eda_configuration.rulebook_activation:
+    name: Webhook
+    description: Webhook activation
+    project: EDA Demo
+    rulebook: eda-rulebook-webhook.yml
+    decision_environment: rhel9_de
+    awx_token: "{{ eda_controller_app_token }}"
+    enabled: true
+    state: present
+    eda_host: "{{ eda_controller_url }}"
+    eda_username: "{{ eda_controller_user }}"
+    eda_password: "{{ eda_controller_password }}"
+    validate_certs: "{{ eda_validate_certs }}"
