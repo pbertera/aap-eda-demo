@@ -153,19 +153,19 @@
         - type: text
           question_name: Ansible Controller Host
           question_description: Ansible controller hostname (with https://)
-          variable: controller_host
+          variable: aap2_controller_url
           required: true
           default: "{{ aap2_controller_url }}"
         - type: text
           question_name: Ansible controller username
           question_description: Ansible controller admin user
-          variable: controller_username
+          variable: aap2_controller_username
           required: true
           default: "{{ aap2_controller_username }}"
         - type: password
           question_name: Ansible controller password
           question_description: Ansible controller admin password
-          variable: controller_password
+          variable: aap2_controller_username
           required: true
           default: "{{ aap2_controller_password }}"
         - type: text
@@ -194,18 +194,18 @@
           default: "{{ automation_hub_token }}"
         - type: text
           question_name: ServiceNow username
-          variable: snow_username
+          variable: servicenow_instance_user
           required: true
           default: "{{ servicenow_instance_user }}"
         - type: password
           question_name: ServiceNow password
-          variable: snow_password
+          variable: servicenow_instance_password
           required: true
           default: "{{ servicenow_instance_password }}"
         - type: text
           question_name: ServiceNow host
           question_description: ServiceNow host (with https://)
-          variable: snow_host
+          variable: servicenow_instance_url
           required: true
           default: "{{ servicenow_instance_url }}"
         - type: text
