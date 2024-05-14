@@ -19,13 +19,13 @@
               extra_vars:
                 alerts: "{{ event.payload.alerts }}"
                 alertStatus: "{{ event.payload.status }}"
-        - run_job_template:
-            name: "Demo EDA Alertmanager handler"
-            organization: Default
-            set_facts: true
-            job_args:
-              extra_vars:
-                alertStatus: "{{ event.payload.status }}"
+#        - run_job_template:
+#            name: "Demo EDA Alertmanager handler"
+#            organization: Default
+#            set_facts: true
+#            job_args:
+#              extra_vars:
+#                alertStatus: "{{ event.payload.status }}"
 
     - name: EDA | AlertManager | Close incident and notify resolution
       condition:
