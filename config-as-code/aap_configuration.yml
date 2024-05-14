@@ -96,9 +96,8 @@
   - name: Add an inventory source
     ansible.controller.inventory_source:
       name: "inventory-source"
-      description: "Inventory froma git repo"
-      inventory: "{{ aap2_controller_snow_inventory }}"
-      credential: "{{ aap2_controller_snow_credential }}"
+      description: "Inventory from a git repo"
+      inventory: "{{ aap2_controller_inventory }}"
       source: scm
       source_project: "{{ aap2_controller_project }}"
       source_path: inventory
