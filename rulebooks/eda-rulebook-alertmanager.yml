@@ -20,7 +20,7 @@
                 alerts: "{{ event.payload.alerts }}"
                 alertStatus: "{{ event.payload.status }}"
         - run_job_template:
-            name: "[EDA] Alertmanager ITSM"
+            name: "Demo EDA Alertmanager handler"
             organization: Default
             set_facts: true
             job_args:
