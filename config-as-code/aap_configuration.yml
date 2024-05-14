@@ -6,7 +6,9 @@
     aap2_controller_validate_certs: false
     aap2_controller_snow_credential: ServiceNow credential
     aap2_controller_snow_inventory: ServiceNow inventory
-    aap2_controller_execution_environment: ServiceNow EE
+    aaip2_controller_execution_environment: ServiceNow EE
+    eda_validate_certs: false
+
   tasks:
   - name: Add EE to the controller instance
     ansible.controller.execution_environment:
@@ -251,11 +253,50 @@
           - "false"
           - "true"
           default: "true"
+        - type: text
+          question_name: EDA Controller Host
+          question_description: EDA controller hostname (with https://)
+          variable: eda_controller_url
+          required: true
+          default: "{{ eda_controller_url }}"
+        - type: text
+          question_name: EDA controller username
+          question_description: EDA controller admin user
+          variable: eda_controller_username
+          required: true
+          default: "{{ eda_controller_username }}"
+        - type: password
+          question_name: EDA controller password
+          question_description: EDA controller admin password
+          variable: eda_controller_password
+          required: true
+          default: "{{ eda_controller_password }}"
+        - type: text
+          question_name: Red Hat Portal Username
+          question_description: Red Hat Portal Username
+          variable: rhsm_account_username
+          required: true
+          default: "{{ rhsm_account_username }}"
+        - type: password
+          question_name: Red Hat Portal Password
+          question_description: Red Hat Portal Password
+          variable: rhsm_account_password
+          required: true
+          default: "{{ rhsm_account_password }}"
+        - type: multiplechoice
+          question_name: Configure EDA Controller
+          variable: configure_eda_controller
+          required: true
+          choices:
+          - "false"
+          - "true"
+          default: "true"
+
       controller_host: "{{ aap2_controller_url }}"
       controller_username: "{{ aap2_controller_username }}"
       controller_password: "{{ aap2_controller_password }}"
       validate_certs: "{{ aap2_controller_validate_certs }}"
-
+      
   - name: Include CMDB Configuration tasks
     ansible.builtin.import_tasks: aap_cmdb.yml
 
@@ -265,6 +306,6 @@
   - name: Include AlerManager Configuration tasks
     ansible.builtin.import_tasks: aap_alertmanager.yml
 
-#- import_playbook: aap_cmdb.yml
-#- import_playbook: aap_webhook.yml
-#- import_playbook: aap_alertmanager.yml
+  - name: Include EDA Configuration tasks
+    ansible.builtin.import_tasks: eda_configuration.yml
+    when: configure_eda_controller 
