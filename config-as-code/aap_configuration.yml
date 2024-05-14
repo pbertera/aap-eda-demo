@@ -4,6 +4,8 @@
   gather_facts: false
   vars:
     aap2_controller_validate_certs: false
+    aap2_controller_snow_credential: Service Now
+
   tasks:
   - name: Add EE to the controller instance
     ansible.controller.execution_environment:

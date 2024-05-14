@@ -13,7 +13,7 @@
       state: "present"
       project: "{{ aap2_controller_project }}"
       credentials:
-      - Service Now
+      - "{{ aap2_controller_snow_credential }}"
       ask_variables_on_launch: true
       controller_host: "{{ aap2_controller_url }}"
       controller_username: "{{ aap2_controller_username }}"
