@@ -1,0 +1,44 @@
+- name: AAP | Config As Code | Configure the AAP CMDB Dynamic inventory
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Add servicenow inventory
+    ansible.controller.inventory:
+      name: "{{ aap2_controller_snow_inventory }}"
+      description: Servers added to ServiceNow CMDB
+      organization: Default
+      state: present
+      controller_host: "{{ aap2_controller_url }}"
+      controller_username: "{{ aap2_controller_username }}"
+      controller_password: "{{ aap2_controller_password }}"
+      validate_certs: "{{ aap2_controller_validate_certs }}"
+
+  - name: Add an inventory source
+    ansible.controller.inventory_source:
+      name: "inventory-source"
+      description: "now.yaml from project 'ServiceNow inventory project'"
+      inventory: "{{ aap2_controller_snow_inventory }}"
+      credential: "{{ aap2_controller_snow_credential }}"
+      source: scm
+      source_project: "{{ aap2_controller_project }}"
+      source_path: now.yml
+      overwrite: true
+      update_on_launch: true
+      execution_environment: "{{ aap2_controller_execution_environment }}"
+      organization: Default
+      controller_host: "{{ aap2_controller_url }}"
+      controller_username: "{{ aap2_controller_username }}"
+      controller_password: "{{ aap2_controller_password }}"
+      validate_certs: "{{ aap2_controller_validate_certs }}"
+
+  - name: Update the inventory source
+    ansible.controller.inventory_source_update:
+      name: "inventory-source"
+      inventory: "{{ aap2_controller_snow_inventory }}"
+      organization: Default
+      controller_host: "{{ aap2_controller_url }}"
+      controller_username: "{{ aap2_controller_username }}"
+      controller_password: "{{ aap2_controller_password }}"
+      validate_certs: "{{ aap2_controller_validate_certs }}"
+    when: aap2_controller_sync_inventory | bool

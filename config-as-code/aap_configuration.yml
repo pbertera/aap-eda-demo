@@ -139,7 +139,7 @@
       organization: Default
       inventory: "{{ aap2_controller_snow_inventory }}"
       project: "{{ aap2_controller_project }}"
-      playbook: playbooks/aap_configuration.yml
+      playbook: config-as-code/aap_configuration.yml
       credentials:
       - Controller Credential
       state: present
