@@ -8,6 +8,7 @@
     aap2_controller_snow_inventory: ServiceNow inventory
     aaip2_controller_execution_environment: ServiceNow EE
     eda_validate_certs: false
+    configure_eda_controller: false
 
   tasks:
   - name: Add EE to the controller instance
@@ -262,9 +263,9 @@
         - type: text
           question_name: EDA controller username
           question_description: EDA controller admin user
-          variable: eda_controller_username
+          variable: eda_controller_user
           required: true
-          default: "{{ eda_controller_username }}"
+          default: "{{ eda_controller_user }}"
         - type: password
           question_name: EDA controller password
           question_description: EDA controller admin password
@@ -298,14 +299,14 @@
       validate_certs: "{{ aap2_controller_validate_certs }}"
       
   - name: Include CMDB Configuration tasks
-    ansible.builtin.import_tasks: aap_cmdb.yml
+    ansible.builtin.import_tasks: tasks/aap_cmdb.yml
 
   - name: Include Webhook Configuration tasks
-    ansible.builtin.import_tasks: aap_webhook.yml
+    ansible.builtin.import_tasks: tasks/aap_webhook.yml
 
   - name: Include AlerManager Configuration tasks
-    ansible.builtin.import_tasks: aap_alertmanager.yml
+    ansible.builtin.import_tasks: tasks/aap_alertmanager.yml
 
   - name: Include EDA Configuration tasks
-    ansible.builtin.import_tasks: eda_configuration.yml
+    ansible.builtin.import_tasks: tasks/eda_configuration.yml
     when: configure_eda_controller 
