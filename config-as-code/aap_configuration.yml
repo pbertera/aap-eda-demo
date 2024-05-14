@@ -2,6 +2,8 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    aap2_controller_validate_certs: false
   tasks:
   - name: Add EE to the controller instance
     ansible.controller.execution_environment:
@@ -167,6 +169,30 @@
           required: true
           default: "{{ aap2_controller_password }}"
         - type: text
+          question_name: Automation hub (validated)
+          question_description: Automation hub (validated)
+          variable: automation_hub_url_validated
+          required: true
+          default: "{{ automation_hub_url_validated }}"
+        - type: text
+          question_name: Automation hub (published)
+          question_description: Automation hub (published)
+          variable: automation_hub_url_published
+          required: false
+          default: "{{ automation_hub_url_published }}"
+        - type: text
+          question_name: Automation hub Auth. URL
+          question_description: Automation Auth. URL
+          variable: automation_hub_auth_url
+          required: true
+          default: "{{ automation_hub_auth_url }}"
+        - type: password
+          question_name: Automation hub token
+          question_description: Automation hub token
+          variable: automation_hub_token
+          required: true
+          default: "{{ automation_hub_url_token }}"
+        - type: text
           question_name: ServiceNow username
           variable: snow_username
           required: true
@@ -183,20 +209,32 @@
           required: true
           default: "{{ servicenow_instance_url }}"
         - type: text
+          question_name: AAP Controller Project
+          question_description: AAP Controller Project
+          variable: aap2_controller_project
+          required: true
+          default: "{{ aap2_controller_project }}"
+        - type: text
           question_name: Git Repository
           question_description: Git Repository URL
           variable: scm_url
           required: true
           default: "{{ scm_url }}"
         - type: text
-          question_name: Execution Environment
+          question_name: Execution Environment Name
           question_description: Execution Environment Image
-          variable: execution_environment_image
+          variable: aap2_controller_execution_environment
+          required: true
+          default: "{{ aap2_controller_execution_environment }}"
+        - type: text
+          question_name: Execution Environment Image
+          question_description: Execution Environment Image
+          variable: aap2_controller_execution_environment_image
           required: true
           default: "{{ aap2_controller_execution_environment_image }}"
         - type: multiplechoice
           question_name: Sync the project after creation
-          variable: sync_project
+          variable: aap2_controller_sync_project
           required: true
           choices:
           - "false"
@@ -204,7 +242,7 @@
           default: "true"
         - type: multiplechoice
           question_name: Sync the inventory
-          variable: sync_inventory
+          variable: aap2_controller_sync_inventory
           required: true
           choices:
           - "false"
