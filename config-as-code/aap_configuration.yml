@@ -191,7 +191,7 @@
           question_description: Automation hub token
           variable: automation_hub_token
           required: true
-          default: "{{ automation_hub_url_token }}"
+          default: "{{ automation_hub_token }}"
         - type: text
           question_name: ServiceNow username
           variable: snow_username
