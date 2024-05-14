@@ -26,7 +26,7 @@
 - name: create EDA Project
   infra.eda_configuration.project:
     name: EDA Demo
-    url: "{{ scm_url }""
+    url: "{{ scm_url }"
     state: present
     eda_host: "{{ eda_controller_url }}"
     eda_username: "{{ eda_controller_user }}"
