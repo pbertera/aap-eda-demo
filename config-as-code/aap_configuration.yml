@@ -7,7 +7,6 @@
     aap2_controller_snow_credential: ServiceNow credential
     aap2_controller_snow_inventory: ServiceNow inventory
     aap2_controller_execution_environment: ServiceNow EE
-
   tasks:
   - name: Add EE to the controller instance
     ansible.controller.execution_environment:
@@ -257,6 +256,15 @@
       controller_password: "{{ aap2_controller_password }}"
       validate_certs: "{{ aap2_controller_validate_certs }}"
 
-- import_playbook: aap_cmdb.yml
-- import_playbook: aap_webhook.yml
-- import_playbook: aap_alertmanager.yml
+  - name: Include CMDB Configuration tasks
+    ansible.builtin.import_tasks: aap_cmdb.yml
+
+  - name: Include Webhook Configuration tasks
+    ansible.builtin.import_tasks: aap_webhook.yml
+
+  - name: Include AlerManager Configuration tasks
+    ansible.builtin.import_tasks: aap_alertmanager.yml
+
+#- import_playbook: aap_cmdb.yml
+#- import_playbook: aap_webhook.yml
+#- import_playbook: aap_alertmanager.yml
