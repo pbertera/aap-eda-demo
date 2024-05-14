@@ -1,0 +1,10 @@
+plugin: servicenow.itsm.now
+table: cmdb_ci_server
+columns: ["name", "dns_domain", "mac_address", "ip_address"]
+enhanced: true
+#query:
+#  - os: = Linux Red Hat
+#  - os: = Windows XP
+keyed_groups:
+  - key: Category
+#    prefix: Category
