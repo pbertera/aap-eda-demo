@@ -165,7 +165,7 @@
         - type: password
           question_name: Ansible controller password
           question_description: Ansible controller admin password
-          variable: aap2_controller_username
+          variable: aap2_controller_password
           required: true
           default: "{{ aap2_controller_password }}"
         - type: text
