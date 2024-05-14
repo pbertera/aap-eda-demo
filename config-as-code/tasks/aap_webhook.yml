@@ -3,7 +3,7 @@
     name: Demo EDA Webhook handler
     job_type: "run"
     organization: "Default"
-    inventory: Demo Inventory
+    inventory: "{{ aap2_controller_snow_inventory }}"
     playbook: playbooks/webhook-handler.yml
     state: "present"
     project: "{{ aap2_controller_project }}"

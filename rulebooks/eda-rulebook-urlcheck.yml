@@ -1,0 +1,25 @@
+---
+- name: Listen for events on a web service
+  hosts: localhost
+  sources:
+  - ansible.eda.url_check:
+      urls:
+      - http://aap.demo.lab:9080
+      delay: 10
+
+  rules:
+  - name: Website is up
+    condition: event.url_check.status == "up"
+    action:
+      run_module:
+        name: ansible.builtin.debug
+        module_args:
+          msg: "Website is up, nothing to do"
+
+  - name: Website is down
+    condition: event.url_check.status == "down"
+    action:
+      run_module:
+        name: ansible.builtin.debug
+        module_args:
+          msg: "Website is down, fire the alarm!"
