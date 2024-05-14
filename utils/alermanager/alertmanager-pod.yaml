@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alertmanager
+spec:
+  containers:
+  - name: alertmanager
+    image: quay.io/kubealex/eda-alertmanager
+    ports:
+    - containerPort: 9093
+      hostPort: 9093
+      protocol: TCP
+    volumeMounts:
+    - mountPath: /etc/alertmanager:Z
+      name: config
+  volumes:
+    - hostPath:
+        path: ./alertmanager/
+        type: Directory
+      name: config
