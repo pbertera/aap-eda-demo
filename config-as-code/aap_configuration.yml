@@ -9,7 +9,7 @@
     aaip2_controller_execution_environment: ServiceNow EE
     eda_validate_certs: false
     configure_eda_controller: false
-
+    eda_controller_app_token: AAP token
   tasks:
   - name: Add EE to the controller instance
     ansible.controller.execution_environment:
