@@ -1,0 +1,69 @@
+- name: EDA | Config As Code | Configure the EDA Controller
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+  - name: Create eda registry credential
+    infra.eda_configuration.credential:
+      name: demo_rh_registry_credential
+      description: registry.redhat.io credentials
+      username: "{{ rhsm_account_username }}"
+      secret: "{{ rhsm_account_password }}"
+      credential_type: "Container Registry"
+      state: present
+      eda_host: "{{ eda_controller_url }}"
+      eda_username: "{{ eda_controller_user }}"
+      eda_password: "{{ eda_controller_password }}"
+      validate_certs: "{{ eda_validate_certs }}"
+
+  - name: Create eda decision environment
+    infra.eda_configuration.decision_environment:
+      name: rhel9_de
+      description: RHEL9 supported DE
+      image_url: registry.redhat.io/ansible-automation-platform-24/de-supported-rhel9
+      credential: demo_rh_registry_credential
+      state: present
+      eda_host: "{{ eda_controller_url }}"
+      eda_username: "{{ eda_controller_user }}"
+      eda_password: "{{ eda_controller_password }}"
+      validate_certs: "{{ eda_validate_certs }}"
+
+  - name: Create the demo project
+    infra.eda_configuration.project:
+      name: EDA Demo
+      url: "{{ scm_url }}"
+      state: present
+      eda_host: "{{ eda_controller_url }}"
+      eda_username: "{{ eda_controller_user }}"
+      eda_password: "{{ eda_controller_password }}"
+      validate_certs: "{{ eda_validate_certs }}"
+
+  - name: Create the Webhook Rulebook activation
+    infra.eda_configuration.rulebook_activation:
+      name: Webhook
+      description: Webhook activation
+      project: EDA Demo
+      rulebook: eda-rulebook-webhook.yml
+      decision_environment: rhel9_de
+      awx_token: "{{ eda_controller_app_token }}"
+      enabled: true
+      state: present
+      eda_host: "{{ eda_controller_url }}"
+      eda_username: "{{ eda_controller_user }}"
+      eda_password: "{{ eda_controller_password }}"
+      validate_certs: "{{ eda_validate_certs }}"
+
+  - name: Create the Alertmanager Rulebook activation
+    infra.eda_configuration.rulebook_activation:
+      name: Alertmanager
+      description: Webhook activation
+      project: EDA Demo
+      rulebook: eda-rulebook-alertmanager.yml
+      decision_environment: rhel9_de
+      awx_token: "{{ eda_controller_app_token }}"
+      enabled: true
+      state: present
+      eda_host: "{{ eda_controller_url }}"
+      eda_username: "{{ eda_controller_user }}"
+      eda_password: "{{ eda_controller_password }}"
+      validate_certs: "{{ eda_validate_certs }}"
