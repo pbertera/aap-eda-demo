@@ -62,3 +62,7 @@ This playbook creates all the needed resources in AAP:
 - Automation Hub, Controller and Service Now credentials
 - Service Now execution environment for the Dynamic inventory
 - An inventory with an inventory source integrating the Service Now CMDB
+
+## Kudos
+
+This demo is mainly inspired by the great [kubealex](https://github.com/kubealex) work on another [EDA demo](https://github.com/kubealex/event-driven-automation)
