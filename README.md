@@ -1,6 +1,6 @@
 # Red Hat Ansible Automation Platform Demo
 
-[!eda-demo architecture](assets/eda-demo.png)
+![eda-demo architecture](assets/eda-demo.png)
 
 This repository contains the code to showcase a demo of Ansible Automation Platform on the following topics:
 
