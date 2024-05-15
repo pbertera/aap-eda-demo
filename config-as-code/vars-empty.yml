@@ -1,28 +1,42 @@
+# AAP Configuration vars
 aap2_controller_url: https://aap.demo.lab:8443
 aap2_controller_username: admin
-aap2_controller_password: admin
+aap2_controller_password: *****
 aap2_controller_validate_certs: false
 aap2_controller_project: AAP Demo EDA
 aap2_controller_sync_project: true
+aap2_controller_sync_inventory: true
+aap2_controller_execution_environment: ServiceNow EE
+aap2_controller_execution_environment_image: quay.io/pbertera/snow_ee:latest
+aap2_controller_snow_credential: ServiceNow credential
+aap2_controller_snow_inventory: ServiceNow inventory
+aap2_controller_inventory: Controller
 
-automation_hub_token: ****
+# Authomation Hub
+automation_hub_token: ********************
 automation_hub_url_validated: https://console.redhat.com/api/automation-hub/content/validated/
 automation_hub_url_published: https://console.redhat.com/api/automation-hub/content/published/
 automation_hub_auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
 
+# EDA
 eda_controller_url: https://aap.demo.lab:8445
 eda_controller_user: admin
-eda_controller_password: admin
+eda_controller_password: ****
 eda_controller_app_token: AAP token
 eda_validate_certs: false
+configure_eda_controller: true
 
+# Git repo
 scm_url: https://github.com/pbertera/aap-eda-demo
 
-servicenow_instance_url: https://xxx.service-now.com/
+# ServiceNow
+servicenow_instance_url: https://dev******.service-now.com/
 servicenow_instance_user: admin
-servicenow_instance_password: ****
+servicenow_instance_password: *****
 
-rhsm_account_username: ******
-rhsm_account_password: ******
+# Red Hat portal credentials
+rhsm_account_username: *****
+rhsm_account_password: *****
 
+# AAP Token
 token_description: EDA Token
