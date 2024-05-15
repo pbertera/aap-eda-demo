@@ -6,14 +6,14 @@
 
   sources:
     - ansible.eda.webhook:
-        host: 0.0.0.0
+        host: "0.0.0.0"
         port: 5000
   rules:
     - name: EDA | Webhook | Run playbook to greet our webhook callers
       condition: event.payload.name == 'greeting'
       actions:
         - run_job_template:
-            name: "Demo EDA Webhook handler"
+            name: Demo EDA Webhook handler
             organization: Default
             job_args:
               extra_vars:

@@ -1,10 +1,11 @@
+---
 - name: Create eda registry credential
   infra.eda_configuration.credential:
     name: demo_rh_registry_credential
     description: registry.redhat.io credentials
     username: "{{ rhsm_account_username }}"
     secret: "{{ rhsm_account_password }}"
-    credential_type: "Container Registry"
+    credential_type: Container Registry
     state: present
     eda_host: "{{ eda_controller_url }}"
     eda_username: "{{ eda_controller_user }}"

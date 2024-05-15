@@ -1,3 +1,4 @@
+---
 - name: AAP | Config As Code | Configure the AAP Controller
   hosts: localhost
   connection: local
@@ -13,329 +14,329 @@
     aap2_controller_inventory: Controller
 
   tasks:
-  - name: Add EE to the controller instance
-    ansible.controller.execution_environment:
-      name: "{{ aap2_controller_execution_environment }}"
-      image: "{{ aap2_controller_execution_environment_image }}"
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Add EE to the controller instance
+      ansible.controller.execution_environment:
+        name: "{{ aap2_controller_execution_environment }}"
+        image: "{{ aap2_controller_execution_environment_image }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Create the Automation Hub credential - published
-    ansible.controller.credential:
-      name: Automation Hub Token - published
-      credential_type: Ansible Galaxy/Automation Hub API Token
-      organization: Default
-      inputs:
-        url: "{{ automation_hub_url_published }}"
-        auth_url: "{{ automation_hub_auth_url }}"
-        token: "{{ automation_hub_token }}" 
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
- 
-  - name: Create the Automation Hub credential - validated
-    ansible.controller.credential:
-      name: Automation Hub Token - validated
-      credential_type: Ansible Galaxy/Automation Hub API Token
-      organization: Default
-      inputs:
-        url: "{{ automation_hub_url_validated }}"
-        auth_url: "{{ automation_hub_auth_url }}"
-        token: "{{ automation_hub_token }}" 
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Create the Automation Hub credential - published
+      ansible.controller.credential:
+        name: Automation Hub Token - published
+        credential_type: Ansible Galaxy/Automation Hub API Token
+        organization: Default
+        inputs:
+          url: "{{ automation_hub_url_published }}"
+          auth_url: "{{ automation_hub_auth_url }}"
+          token: "{{ automation_hub_token }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Add the Automation Hub credentials to the Default Org
-    ansible.controller.organization:
-      name: Default
-      galaxy_credentials:
-      - Ansible Galaxy
-      - Automation Hub Token - validated
-      - Automation Hub Token - published
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Create the Automation Hub credential - validated
+      ansible.controller.credential:
+        name: Automation Hub Token - validated
+        credential_type: Ansible Galaxy/Automation Hub API Token
+        organization: Default
+        inputs:
+          url: "{{ automation_hub_url_validated }}"
+          auth_url: "{{ automation_hub_auth_url }}"
+          token: "{{ automation_hub_token }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Create AAP Project
-    ansible.controller.project:
-      name: "{{ aap2_controller_project }}"
-      organization: Default
-      state: present
-      scm_type: git
-      scm_url: "{{ scm_url }}" 
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Add the Automation Hub credentials to the Default Org
+      ansible.controller.organization:
+        name: Default
+        galaxy_credentials:
+          - Ansible Galaxy
+          - Automation Hub Token - validated
+          - Automation Hub Token - published
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: "Sync the project {{ aap2_controller_project }}"
-    ansible.controller.project_update:
-      project: "{{ aap2_controller_project }}"
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
-    when: aap2_controller_sync_project | bool
+    - name: Create AAP Project
+      ansible.controller.project:
+        name: "{{ aap2_controller_project }}"
+        organization: Default
+        state: present
+        scm_type: git
+        scm_url: "{{ scm_url }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Add Controller inventory
-    ansible.controller.inventory:
-      name: "{{ aap2_controller_inventory }}"
-      organization: Default
-      state: present
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Sync the project {{ aap2_controller_project }}
+      ansible.controller.project_update:
+        project: "{{ aap2_controller_project }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
+      when: aap2_controller_sync_project | bool
 
-  - name: Add an inventory source
-    ansible.controller.inventory_source:
-      name: "inventory-source"
-      description: "Inventory from a git repo"
-      inventory: "{{ aap2_controller_inventory }}"
-      source: scm
-      source_project: "{{ aap2_controller_project }}"
-      source_path: inventory
-      overwrite: true
-      update_on_launch: true
-#     execution_environment: "{{ aap2_controller_execution_environment }}"
-      organization: Default
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Add Controller inventory
+      ansible.controller.inventory:
+        name: "{{ aap2_controller_inventory }}"
+        organization: Default
+        state: present
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Add servicenow.itsm credential type
-    ansible.controller.credential_type:
-      name: servicenow.itsm
-      kind: cloud
-      inputs:
-        fields:
-        - id: snow_url
-          type: string
-          label: SNOW Instance
-        - id: snow_user
-          type: string
-          label: SNOW Username
-        - id: snow_pwd
-          type: string
-          secret: true
-          label: SNOW Password
-      injectors:
-        extra_vars:
-          snow_instance: !unsafe "{{ snow_url }}"
-          snow_username: !unsafe "{{ snow_user }}"
-          snow_password: !unsafe "{{ snow_pwd }}"
-        env:
-          SN_HOST: "{% raw %}{{ snow_url }}{% endraw %}"
-          SN_USERNAME: "{% raw %}{{ snow_user }}{% endraw %}"
-          SN_PASSWORD: "{% raw %}{{ snow_pwd }}{% endraw %}"
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Add an inventory source
+      ansible.controller.inventory_source:
+        name: inventory-source
+        description: Inventory from a git repo
+        inventory: "{{ aap2_controller_inventory }}"
+        source: scm
+        source_project: "{{ aap2_controller_project }}"
+        source_path: inventory
+        overwrite: true
+        update_on_launch: true
+        #     execution_environment: "{{ aap2_controller_execution_environment }}"
+        organization: Default
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Create the servicenow.itsm credential
-    ansible.controller.credential:
-      name: "{{ aap2_controller_snow_credential }}"
-      credential_type: servicenow.itsm
-      organization: Default
-      inputs:
-        snow_url: "{{ servicenow_instance_url }}"
-        snow_user: "{{ servicenow_instance_user }}"
-        snow_pwd: "{{ servicenow_instance_password }}" 
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Add servicenow.itsm credential type
+      ansible.controller.credential_type:
+        name: servicenow.itsm
+        kind: cloud
+        inputs:
+          fields:
+            - id: snow_url
+              type: string
+              label: SNOW Instance
+            - id: snow_user
+              type: string
+              label: SNOW Username
+            - id: snow_pwd
+              type: string
+              secret: true
+              label: SNOW Password
+        injectors:
+          extra_vars:
+            snow_instance: !unsafe "{{ snow_url }}"
+            snow_username: !unsafe "{{ snow_user }}"
+            snow_password: !unsafe "{{ snow_pwd }}"
+          env:
+            SN_HOST: "{% raw %}{{ snow_url }}{% endraw %}"
+            SN_USERNAME: "{% raw %}{{ snow_user }}{% endraw %}"
+            SN_PASSWORD: "{% raw %}{{ snow_pwd }}{% endraw %}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Create the Controller credential
-    ansible.controller.credential:
-      name: Controller Credential
-      credential_type: Red Hat Ansible Automation Platform
-      organization: Default
-      inputs:
-        host: "{{ aap2_controller_url }}"
-        username: "{{ aap2_controller_username }}"
-        password: "{{ aap2_controller_password }}"
-        verify_ssl: "{{ aap2_controller_validate_certs }}"
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
+    - name: Create the servicenow.itsm credential
+      ansible.controller.credential:
+        name: "{{ aap2_controller_snow_credential }}"
+        credential_type: servicenow.itsm
+        organization: Default
+        inputs:
+          snow_url: "{{ servicenow_instance_url }}"
+          snow_user: "{{ servicenow_instance_user }}"
+          snow_pwd: "{{ servicenow_instance_password }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Create the Setup Job Template
-    ansible.controller.job_template:
-      name: Setup AAP EDA Demo
-      job_type: run
-      organization: Default
-      inventory: "{{ aap2_controller_inventory }}"
-      project: "{{ aap2_controller_project }}"
-      playbook: config-as-code/aap_configuration.yml
-      credentials:
-      - Controller Credential
-      state: present
-      survey_enabled: true
-      survey_spec:
-        name: AAP setup survey
-        description: AAP setup survey
-        spec:
-        - type: text
-          question_name: Ansible Controller Host
-          question_description: Ansible controller hostname (with https://)
-          variable: aap2_controller_url
-          required: true
-          default: "{{ aap2_controller_url }}"
-        - type: text
-          question_name: Ansible controller username
-          question_description: Ansible controller admin user
-          variable: aap2_controller_username
-          required: true
-          default: "{{ aap2_controller_username }}"
-        - type: password
-          question_name: Ansible controller password
-          question_description: Ansible controller admin password
-          variable: aap2_controller_password
-          required: true
-          default: "{{ aap2_controller_password }}"
-        - type: text
-          question_name: Automation hub (validated)
-          question_description: Automation hub (validated)
-          variable: automation_hub_url_validated
-          required: true
-          default: "{{ automation_hub_url_validated }}"
-        - type: text
-          question_name: Automation hub (published)
-          question_description: Automation hub (published)
-          variable: automation_hub_url_published
-          required: false
-          default: "{{ automation_hub_url_published }}"
-        - type: text
-          question_name: Automation hub Auth. URL
-          question_description: Automation Auth. URL
-          variable: automation_hub_auth_url
-          required: true
-          default: "{{ automation_hub_auth_url }}"
-        - type: password
-          question_name: Automation hub token
-          question_description: Automation hub token
-          variable: automation_hub_token
-          required: true
-          default: "{{ automation_hub_token }}"
-        - type: text
-          question_name: ServiceNow username
-          variable: servicenow_instance_user
-          required: true
-          default: "{{ servicenow_instance_user }}"
-        - type: password
-          question_name: ServiceNow password
-          variable: servicenow_instance_password
-          required: true
-          default: "{{ servicenow_instance_password }}"
-        - type: text
-          question_name: ServiceNow host
-          question_description: ServiceNow host (with https://)
-          variable: servicenow_instance_url
-          required: true
-          default: "{{ servicenow_instance_url }}"
-        - type: text
-          question_name: AAP Controller Project
-          question_description: AAP Controller Project
-          variable: aap2_controller_project
-          required: true
-          default: "{{ aap2_controller_project }}"
-        - type: text
-          question_name: Git Repository
-          question_description: Git Repository URL
-          variable: scm_url
-          required: true
-          default: "{{ scm_url }}"
-        - type: text
-          question_name: Execution Environment Name
-          question_description: Execution Environment Image
-          variable: aap2_controller_execution_environment
-          required: true
-          default: "{{ aap2_controller_execution_environment }}"
-        - type: text
-          question_name: Execution Environment Image
-          question_description: Execution Environment Image
-          variable: aap2_controller_execution_environment_image
-          required: true
-          default: "{{ aap2_controller_execution_environment_image }}"
-        - type: multiplechoice
-          question_name: Sync the project after creation
-          variable: aap2_controller_sync_project
-          required: true
-          choices:
-          - "false"
-          - "true"
-          default: "true"
-        - type: multiplechoice
-          question_name: Sync the inventory
-          variable: aap2_controller_sync_inventory
-          required: true
-          choices:
-          - "false"
-          - "true"
-          default: "true"
-        - type: text
-          question_name: EDA Controller Host
-          question_description: EDA controller hostname (with https://)
-          variable: eda_controller_url
-          required: true
-          default: "{{ eda_controller_url }}"
-        - type: text
-          question_name: EDA controller username
-          question_description: EDA controller admin user
-          variable: eda_controller_user
-          required: true
-          default: "{{ eda_controller_user }}"
-        - type: password
-          question_name: EDA controller password
-          question_description: EDA controller admin password
-          variable: eda_controller_password
-          required: true
-          default: "{{ eda_controller_password }}"
-        - type: text
-          question_name: Red Hat Portal Username
-          question_description: Red Hat Portal Username
-          variable: rhsm_account_username
-          required: true
-          default: "{{ rhsm_account_username }}"
-        - type: password
-          question_name: Red Hat Portal Password
-          question_description: Red Hat Portal Password
-          variable: rhsm_account_password
-          required: true
-          default: "{{ rhsm_account_password }}"
-        - type: multiplechoice
-          question_name: Configure EDA Controller
-          variable: configure_eda_controller
-          required: true
-          choices:
-          - "false"
-          - "true"
-          default: "true"
+    - name: Create the Controller credential
+      ansible.controller.credential:
+        name: Controller Credential
+        credential_type: Red Hat Ansible Automation Platform
+        organization: Default
+        inputs:
+          host: "{{ aap2_controller_url }}"
+          username: "{{ aap2_controller_username }}"
+          password: "{{ aap2_controller_password }}"
+          verify_ssl: "{{ aap2_controller_validate_certs }}"
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
-      
-  - name: Include CMDB Configuration tasks
-    ansible.builtin.import_tasks: tasks/aap_cmdb.yml
+    - name: Create the Setup Job Template
+      ansible.controller.job_template:
+        name: Setup AAP EDA Demo
+        job_type: run
+        organization: Default
+        inventory: "{{ aap2_controller_inventory }}"
+        project: "{{ aap2_controller_project }}"
+        playbook: config-as-code/aap_configuration.yml
+        credentials:
+          - Controller Credential
+        state: present
+        survey_enabled: true
+        survey_spec:
+          name: AAP setup survey
+          description: AAP setup survey
+          spec:
+            - type: text
+              question_name: Ansible Controller Host
+              question_description: Ansible controller hostname (with https://)
+              variable: aap2_controller_url
+              required: true
+              default: "{{ aap2_controller_url }}"
+            - type: text
+              question_name: Ansible controller username
+              question_description: Ansible controller admin user
+              variable: aap2_controller_username
+              required: true
+              default: "{{ aap2_controller_username }}"
+            - type: password
+              question_name: Ansible controller password
+              question_description: Ansible controller admin password
+              variable: aap2_controller_password
+              required: true
+              default: "{{ aap2_controller_password }}"
+            - type: text
+              question_name: Automation hub (validated)
+              question_description: Automation hub (validated)
+              variable: automation_hub_url_validated
+              required: true
+              default: "{{ automation_hub_url_validated }}"
+            - type: text
+              question_name: Automation hub (published)
+              question_description: Automation hub (published)
+              variable: automation_hub_url_published
+              required: false
+              default: "{{ automation_hub_url_published }}"
+            - type: text
+              question_name: Automation hub Auth. URL
+              question_description: Automation Auth. URL
+              variable: automation_hub_auth_url
+              required: true
+              default: "{{ automation_hub_auth_url }}"
+            - type: password
+              question_name: Automation hub token
+              question_description: Automation hub token
+              variable: automation_hub_token
+              required: true
+              default: "{{ automation_hub_token }}"
+            - type: text
+              question_name: ServiceNow username
+              variable: servicenow_instance_user
+              required: true
+              default: "{{ servicenow_instance_user }}"
+            - type: password
+              question_name: ServiceNow password
+              variable: servicenow_instance_password
+              required: true
+              default: "{{ servicenow_instance_password }}"
+            - type: text
+              question_name: ServiceNow host
+              question_description: ServiceNow host (with https://)
+              variable: servicenow_instance_url
+              required: true
+              default: "{{ servicenow_instance_url }}"
+            - type: text
+              question_name: AAP Controller Project
+              question_description: AAP Controller Project
+              variable: aap2_controller_project
+              required: true
+              default: "{{ aap2_controller_project }}"
+            - type: text
+              question_name: Git Repository
+              question_description: Git Repository URL
+              variable: scm_url
+              required: true
+              default: "{{ scm_url }}"
+            - type: text
+              question_name: Execution Environment Name
+              question_description: Execution Environment Image
+              variable: aap2_controller_execution_environment
+              required: true
+              default: "{{ aap2_controller_execution_environment }}"
+            - type: text
+              question_name: Execution Environment Image
+              question_description: Execution Environment Image
+              variable: aap2_controller_execution_environment_image
+              required: true
+              default: "{{ aap2_controller_execution_environment_image }}"
+            - type: multiplechoice
+              question_name: Sync the project after creation
+              variable: aap2_controller_sync_project
+              required: true
+              choices:
+                - "false"
+                - "true"
+              default: "true"
+            - type: multiplechoice
+              question_name: Sync the inventory
+              variable: aap2_controller_sync_inventory
+              required: true
+              choices:
+                - "false"
+                - "true"
+              default: "true"
+            - type: text
+              question_name: EDA Controller Host
+              question_description: EDA controller hostname (with https://)
+              variable: eda_controller_url
+              required: true
+              default: "{{ eda_controller_url }}"
+            - type: text
+              question_name: EDA controller username
+              question_description: EDA controller admin user
+              variable: eda_controller_user
+              required: true
+              default: "{{ eda_controller_user }}"
+            - type: password
+              question_name: EDA controller password
+              question_description: EDA controller admin password
+              variable: eda_controller_password
+              required: true
+              default: "{{ eda_controller_password }}"
+            - type: text
+              question_name: Red Hat Portal Username
+              question_description: Red Hat Portal Username
+              variable: rhsm_account_username
+              required: true
+              default: "{{ rhsm_account_username }}"
+            - type: password
+              question_name: Red Hat Portal Password
+              question_description: Red Hat Portal Password
+              variable: rhsm_account_password
+              required: true
+              default: "{{ rhsm_account_password }}"
+            - type: multiplechoice
+              question_name: Configure EDA Controller
+              variable: configure_eda_controller
+              required: true
+              choices:
+                - "false"
+                - "true"
+              default: "true"
 
-  - name: Include Webhook Configuration tasks
-    ansible.builtin.import_tasks: tasks/aap_webhook.yml
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
 
-  - name: Include AlerManager Configuration tasks
-    ansible.builtin.import_tasks: tasks/aap_alertmanager.yml
+    - name: Include CMDB Configuration tasks
+      ansible.builtin.import_tasks: tasks/aap_cmdb.yml
 
-  - name: Include EDA Configuration tasks
-    ansible.builtin.import_tasks: tasks/eda_configuration.yml
-    when: configure_eda_controller 
+    - name: Include Webhook Configuration tasks
+      ansible.builtin.import_tasks: tasks/aap_webhook.yml
+
+    - name: Include AlerManager Configuration tasks
+      ansible.builtin.import_tasks: tasks/aap_alertmanager.yml
+
+    - name: Include EDA Configuration tasks
+      ansible.builtin.import_tasks: tasks/eda_configuration.yml
+      when: configure_eda_controller

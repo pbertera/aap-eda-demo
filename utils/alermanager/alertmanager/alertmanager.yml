@@ -1,16 +1,17 @@
+---
 route:
-  group_by: ['alertname']
+  group_by: [alertname]
   group_wait: 30s
   group_interval: 1m
   repeat_interval: 1h
-  receiver: 'web.hook'
+  receiver: web.hook
 receivers:
-  - name: 'web.hook'
+  - name: web.hook
     webhook_configs:
-      - url: 'http://aap.demo.lab:5001/endpoint'
+      - url: http://aap.demo.lab:5001/endpoint
 inhibit_rules:
   - source_match:
-      severity: 'critical'
+      severity: critical
     target_match:
-      severity: 'warning'
-    equal: ['alertname', 'dev', 'instance']
+      severity: warning
+    equal: [alertname, dev, instance]

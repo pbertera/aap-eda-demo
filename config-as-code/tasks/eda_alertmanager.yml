@@ -1,3 +1,4 @@
+---
 - name: Create the Alertmanager Rulebook activation
   infra.eda_configuration.rulebook_activation:
     name: Alertmanager

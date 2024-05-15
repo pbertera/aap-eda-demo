@@ -1,6 +1,7 @@
+---
 plugin: servicenow.itsm.now
 table: cmdb_ci_server
-columns: ["name", "dns_domain", "mac_address", "ip_address"]
+columns: [name, dns_domain, mac_address, ip_address]
 enhanced: true
 #query:
 #  - os: = Linux Red Hat

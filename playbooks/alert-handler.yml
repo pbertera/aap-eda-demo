@@ -8,7 +8,7 @@
         - name: Debug message
           ansible.builtin.debug:
             msg:
-              - "The event {{ item.labels.alertName }} just triggered on {{ item.labels.alertTargetHosts }}"
+              - The event {{ item.labels.alertName }} just triggered on {{ item.labels.alertTargetHosts }}
               - "Alert body is: {{ item.labels.alertMessage }}"
           loop: "{{ ansible_eda.event.payload.alerts }}"
 
@@ -18,9 +18,9 @@
               host: "{{ snow_instance }}"
               username: "{{ snow_username }}"
               password: "{{ snow_password }}"
-            caller: "admin"
+            caller: admin
             state: new
-            short_description: "Alert {{ item.labels.alertName }} on host {{ item.labels.alertTargetHosts }}"
+            short_description: Alert {{ item.labels.alertName }} on host {{ item.labels.alertTargetHosts }}
             description: |
               The following alert triggered on {{ item.labels.alertTargetHosts }}:
               "{{ item.labels.alertMessage }}"
@@ -52,7 +52,7 @@
               password: "{{ snow_password }}"
             state: resolved
             number: "{{ ticket_number }}"
-            close_code: "Solved (Permanently)"
+            close_code: Solved (Permanently)
             close_notes: |
               The following alert triggered on {{ item.labels.alertTargetHosts }}:
               "{{ item.labels.alertMessage }}"
@@ -61,5 +61,5 @@
 
         - name: Notify resolution
           ansible.builtin.debug:
-            msg: "The event {{ item.labels.alertName }} was just resolved by Ansible Event Driven!"
+            msg: The event {{ item.labels.alertName }} was just resolved by Ansible Event Driven!
           loop: "{{ alerts }}"

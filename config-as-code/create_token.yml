@@ -1,27 +1,28 @@
+---
 - name: EDA | Config As Code | Configure the EDA token
   hosts: localhost
   connection: local
   gather_facts: false
   tasks:
-  - name: Create a new token using username/password
-    ansible.controller.token:
-      description: "{{ token_description }}"
-      scope: "write"
-      state: present
-      controller_host: "{{ aap2_controller_url }}"
-      controller_username: "{{ aap2_controller_username }}"
-      controller_password: "{{ aap2_controller_password }}"
-      validate_certs: "{{ aap2_controller_validate_certs }}"
-    register: _aap_token
-  - name: debug token
-    ansible.builtin.debug:
-      msg:
-      - "Token is {{ _aap_token }}" 
-  - name: Configure the token on EDA
-    infra.eda_configuration.user_token:
-      name: "{{ eda_controller_app_token }}"
-      token: "{{ _aap_token.ansible_facts.controller_token.token }}"
-      eda_host: "{{ eda_controller_url }}"
-      eda_username: "{{ eda_controller_user }}"
-      eda_password: "{{ eda_controller_password }}"
-      validate_certs: "{{ eda_validate_certs }}"
+    - name: Create a new token using username/password
+      ansible.controller.token:
+        description: "{{ token_description }}"
+        scope: write
+        state: present
+        controller_host: "{{ aap2_controller_url }}"
+        controller_username: "{{ aap2_controller_username }}"
+        controller_password: "{{ aap2_controller_password }}"
+        validate_certs: "{{ aap2_controller_validate_certs }}"
+      register: _aap_token
+    - name: debug token
+      ansible.builtin.debug:
+        msg:
+          - Token is {{ _aap_token }}
+    - name: Configure the token on EDA
+      infra.eda_configuration.user_token:
+        name: "{{ eda_controller_app_token }}"
+        token: "{{ _aap_token.ansible_facts.controller_token.token }}"
+        eda_host: "{{ eda_controller_url }}"
+        eda_username: "{{ eda_controller_user }}"
+        eda_password: "{{ eda_controller_password }}"
+        validate_certs: "{{ eda_validate_certs }}"

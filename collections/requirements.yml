@@ -1,5 +1,5 @@
 ---
 collections:
-- name: servicenow.itsm
-- name: ansible.controller
-- name: infra.eda_configuration
+  - name: servicenow.itsm
+  - name: ansible.controller
+  - name: infra.eda_configuration

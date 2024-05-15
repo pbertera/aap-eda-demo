@@ -1,3 +1,4 @@
+---
 - name: Add servicenow inventory
   ansible.controller.inventory:
     name: "{{ aap2_controller_snow_inventory }}"
@@ -11,8 +12,8 @@
 
 - name: Add an inventory source
   ansible.controller.inventory_source:
-    name: "inventory-source"
-    description: "now.yaml from project 'ServiceNow inventory project'"
+    name: inventory-source
+    description: now.yaml from project 'ServiceNow inventory project'
     inventory: "{{ aap2_controller_snow_inventory }}"
     credential: "{{ aap2_controller_snow_credential }}"
     source: scm
@@ -29,7 +30,7 @@
 
 - name: Update the inventory source
   ansible.controller.inventory_source_update:
-    name: "inventory-source"
+    name: inventory-source
     inventory: "{{ aap2_controller_snow_inventory }}"
     organization: Default
     controller_host: "{{ aap2_controller_url }}"
