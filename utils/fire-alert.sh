@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-name=fooAlert-$RANDOM
+name=fooAlert-15509
+#$RANDOM
 url="${1}/api/v1/alerts"
 bold=$(tput bold)
 normal=$(tput sgr0)
